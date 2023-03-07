@@ -14,8 +14,8 @@ function Navbar() {
     "Business",
     "Lifestyle",
   ];
-  const [active, setActive] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(false); // for scroll evemt
+  const [open, setOpen] = useState(false); // for profile menu
 
   const { pathname } = useLocation();
 
