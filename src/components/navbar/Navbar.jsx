@@ -59,7 +59,6 @@ function Navbar() {
                 alt=""
               />
               <span>{currentUser?.username}</span>
-              {/* that open option menu on profile (abs pos right-down do profile icon) */}
               {open && (
                 <div className="options">
                   {currentUser.isSeller && (
@@ -72,7 +71,6 @@ function Navbar() {
                       </Link>
                     </>
                   )}
-                  {/* if not seller only order message logout */}
                   <Link className="link" to="/orders">
                     Orders
                   </Link>
@@ -98,35 +96,14 @@ function Navbar() {
       {(active || pathname !== "/") && (
         <>
           <hr />
-          {/* TODO- Loop through array to reduce code */}
           <div className="menu">
-            <Link className="link menuLink" to="/">
-              Graphics & Design
-            </Link>
-            <Link className="link menuLink" to="/">
-              Video & Animation
-            </Link>
-            <Link className="link menuLink" to="/">
-              Writing & Translation
-            </Link>
-            <Link className="link menuLink" to="/">
-              AI Services
-            </Link>
-            <Link className="link menuLink" to="/">
-              Digital Marketing
-            </Link>
-            <Link className="link menuLink" to="/">
-              Music & Audio
-            </Link>
-            <Link className="link menuLink" to="/">
-              Programming & Tech
-            </Link>
-            <Link className="link menuLink" to="/">
-              Business
-            </Link>
-            <Link className="link menuLink" to="/">
-              Lifestyle
-            </Link>
+            {downMenuItems.map((item, i) => {
+              return (
+                <Link key={i} className="link-menu" to="/">
+                  {item}
+                </Link>
+              );
+            })}
           </div>
           <hr />
         </>
