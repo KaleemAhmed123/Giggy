@@ -14,7 +14,7 @@ function Navbar() {
     "Business",
     "Lifestyle",
   ];
-  const [active, setActive] = useState(false); // for scroll evemt
+  const [active, setActive] = useState(false); // for scroll evemt false on start
   const [open, setOpen] = useState(false); // for profile menu
 
   const { pathname } = useLocation();
@@ -34,31 +34,35 @@ function Navbar() {
 
   const currentUser = {
     id: 1,
-    username: "Anna",
+    username: "Shaam",
     isSeller: true,
   };
 
   return (
-    <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
+    <div className={`navbar ${active || pathname !== "/" ? "active" : ""}`}>
       <div className="container">
+        {/* left logo */}
         <div className="logo">
           <Link className="link" to="/">
             <span className="text">liverr</span>
           </Link>
           <span className="dot">.</span>
         </div>
+        {/* right links */}
         <div className="links">
           <span>Liverr Business</span>
           <span>Explore</span>
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
+          {/* if not logged in show signin and join button else pic and name */}
           {currentUser ? (
             <div className="user" onClick={() => setOpen(!open)}>
               <img
                 src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt=""
+                alt="user-profile"
               />
               <span>{currentUser?.username}</span>
+              {/* open absolute profile menu- if seller then only Gigs and Add Gigs */}
               {open && (
                 <div className="options">
                   {currentUser.isSeller && (
@@ -81,6 +85,7 @@ function Navbar() {
                     Logout
                   </Link>
                 </div>
+                // end menu end
               )}
             </div>
           ) : (
@@ -92,14 +97,17 @@ function Navbar() {
             </>
           )}
         </div>
+        {/* links end */}
       </div>
+      {/* container end */}
       {(active || pathname !== "/") && (
         <>
           <hr />
+          {/*  */}
           <div className="menu">
             {downMenuItems.map((item, i) => {
               return (
-                <Link key={i} className="link-menu" to="/">
+                <Link key={i} className="link" to="/">
                   {item}
                 </Link>
               );
