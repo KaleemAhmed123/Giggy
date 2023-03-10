@@ -12,13 +12,6 @@
         object-fit: cover;
     }
 
-    .title {
-        position: absolute;
-        top: 40px;
-        left: 15px;
-        font-size: 24px;
-        font-weight: 500;
-    }
     .desc {
         font-weight: 300;
         position: absolute;
@@ -26,4 +19,11 @@
         left: 15px;
     }
 
+    .title {
+        position: absolute;
+        top: 40px;
+        left: 15px;
+        font-size: 24px;
+        font-weight: 500;
+    }
 }
