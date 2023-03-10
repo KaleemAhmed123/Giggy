@@ -5,8 +5,10 @@ import Slide from "../../components/slide/Slide";
 import CatCard from "../../components/catCard/CatCard";
 import Features from "../../components/features/Features";
 import More from "../../components/features/Business";
+import ProjectCard from "../../components/projectCard/ProjectCard";
 import { cards, projects } from "../../data";
 import "./Home.scss";
+import Explore from "../../components/features/Explore";
 const Home = () => {
   return (
     <div className="home">
@@ -19,12 +21,13 @@ const Home = () => {
       </Slide>
       <Features />
       {/* Next features or more whatever*/}
+      <Explore />
       <More />
-      {/* <Slide slidesToShow={4} arrowsScroll={4}>
+      <Slide slidesToShow={4} arrowsScroll={4}>
         {projects.map((card) => (
           <ProjectCard key={card.id} card={card} />
         ))}
-      </Slide> */}
+      </Slide>
     </div>
   );
 };
