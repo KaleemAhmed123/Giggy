@@ -1,14 +1,18 @@
 import React from "react";
-import Featured from "../../components/featured/Featured";
-import TrustedBy from "../../components/trustedBy/TrustedBy";
-import Slide from "../../components/slide/Slide";
-import CatCard from "../../components/catCard/CatCard";
-import Features from "../../components/features/Features";
-import More from "../../components/features/Business";
-import ProjectCard from "../../components/projectCard/ProjectCard";
-import { cards, projects } from "../../data";
 import "./Home.scss";
-import Explore from "../../components/features/Explore";
+import { cards, projects } from "../../data";
+import {
+  Featured,
+  TrustedBy,
+  Slide,
+  CatCard,
+  ProjectCard,
+  Features,
+  Explore,
+  Business,
+  Footer,
+} from "../../components";
+
 const Home = () => {
   return (
     <div className="home">
@@ -22,7 +26,7 @@ const Home = () => {
       <Features />
       {/* Next features or more whatever*/}
       <Explore />
-      <More />
+      <Business />
       <Slide slidesToShow={4} arrowsScroll={4}>
         {projects.map((card) => (
           <ProjectCard key={card.id} card={card} />
@@ -31,5 +35,5 @@ const Home = () => {
     </div>
   );
 };
-
+// Nav and Footer are from Layout Component
 export default Home;

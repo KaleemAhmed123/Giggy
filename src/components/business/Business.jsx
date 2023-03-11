@@ -1,5 +1,6 @@
 import React from "react";
-import "./Features.scss";
+import "./Business.scss";
+
 const Business = () => {
   return (
     <div className="features dark">

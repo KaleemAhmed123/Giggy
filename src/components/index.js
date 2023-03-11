@@ -6,6 +6,9 @@ import GigCard from "./gigCard/GigCard";
 import ProjectCard from "./projectCard/ProjectCard";
 import TrustedBy from "./trustedBy/TrustedBy";
 import Footer from "./footer/Footer";
+import Business from "./business/Business";
+import Explore from "./explore/Explore";
+import Features from "./features/Features";
 
 export {
   Navbar,
@@ -16,4 +19,7 @@ export {
   ProjectCard,
   TrustedBy,
   Footer,
+  Business,
+  Explore,
+  Features,
 };

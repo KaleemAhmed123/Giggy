@@ -1,5 +1,5 @@
 import React from "react";
-import "./Features.scss";
+import "./Explore.scss";
 
 const Explore = () => {
   return (

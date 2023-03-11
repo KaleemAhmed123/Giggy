@@ -1,5 +1,6 @@
 import React from "react";
 import "./Features.scss";
+
 const Features = () => {
   return (
     <div className="features">
@@ -40,7 +41,7 @@ const Features = () => {
           </p>
         </div>
         <div className="item">
-          <video src="./img/video.mp4" controls />
+          <video src="./img/promo.mp4" controls />
         </div>
       </div>
     </div>
