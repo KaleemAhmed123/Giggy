@@ -7,10 +7,12 @@ function Gig() {
     <div className="gig">
       <div className="container">
         <div className="left">
+          {/* upper scene */}
           <span className="breadcrumbs">
             Liverr &gt; Graphics & Design &gt;
           </span>
           <h1>I will create ai generated art for you</h1>
+          {/* image-name-star */}
           <div className="user">
             <img
               className="pic"
@@ -27,6 +29,7 @@ function Gig() {
               <span>5</span>
             </div>
           </div>
+          {/* image-slider */}
           <Slider slidesToShow={1} arrowsScroll={1} className="slider">
             <img
               src="https://images.pexels.com/photos/1074535/pexels-photo-1074535.jpeg?auto=compress&cs=tinysrgb&w=1600"
@@ -41,6 +44,7 @@ function Gig() {
               alt=""
             />
           </Slider>
+          {/* About gig */}
           <h2>About This Gig</h2>
           <p>
             I use an AI program to create images based on text prompts. This
@@ -57,8 +61,10 @@ function Gig() {
             found nowhere else. If you have any questions you're more than
             welcome to send me a message.
           </p>
+          {/* seller area */}
           <div className="seller">
             <h2>About The Seller</h2>
+            {/* user=> image-name-star-contactButton */}
             <div className="user">
               <img
                 src="https://images.pexels.com/photos/720327/pexels-photo-720327.jpeg?auto=compress&cs=tinysrgb&w=1600"
@@ -77,6 +83,7 @@ function Gig() {
                 <button>Contact Me</button>
               </div>
             </div>
+            {/* about user box => From-since-avg-last-lang-hr-desc */}
             <div className="box">
               <div className="items">
                 <div className="item">
@@ -108,10 +115,12 @@ function Gig() {
                 incredibly detailed result.
               </p>
             </div>
+            {/* box end --- */}
           </div>
           <div className="reviews">
             <h2>Reviews</h2>
             <div className="item">
+              {/* user-profile */}
               <div className="user">
                 <img
                   className="pic"
@@ -129,6 +138,7 @@ function Gig() {
                   </div>
                 </div>
               </div>
+              {/* user-profile-end -> starts*/}
               <div className="stars">
                 <img src="/img/star.png" alt="" />
                 <img src="/img/star.png" alt="" />
@@ -137,6 +147,7 @@ function Gig() {
                 <img src="/img/star.png" alt="" />
                 <span>5</span>
               </div>
+              {/* review-text */}
               <p>
                 I just want to say that art_with_ai was the first, and after
                 this, the only artist Ill be using on Fiverr. Communication was
@@ -145,6 +156,7 @@ function Gig() {
                 above and beyond my expectations. I absolutely recommend this
                 gig, and know already that Ill be using it again very very soon
               </p>
+              {/* helpful-or-not-area */}
               <div className="helpful">
                 <span>Helpful?</span>
                 <img src="/img/like.png" alt="" />
@@ -153,6 +165,7 @@ function Gig() {
                 <span>No</span>
               </div>
             </div>
+            {/* one-review-end */}
             <hr />
             <div className="item">
               <div className="user">
@@ -194,6 +207,7 @@ function Gig() {
                 <span>No</span>
               </div>
             </div>
+            {/* review-end */}
             <hr />
             <div className="item">
               <div className="user">
@@ -236,8 +250,10 @@ function Gig() {
                 <span>No</span>
               </div>
             </div>
+            {/* review-end */}
           </div>
         </div>
+        {/* left-end */}
         <div className="right">
           <div className="price">
             <h3>1 AI generated image</h3>
@@ -249,35 +265,37 @@ function Gig() {
           </p>
           <div className="details">
             <div className="item">
-              <img src="/img/clock.png" alt="" />
+              <img src="/img/clock.png" alt="clock-img" />
               <span>2 Days Delivery</span>
             </div>
             <div className="item">
-              <img src="/img/recycle.png" alt="" />
+              <img src="/img/recycle.png" alt="recycle-icon" />
               <span>3 Revisions</span>
             </div>
           </div>
           <div className="features">
             <div className="item">
-              <img src="/img/greencheck.png" alt="" />
+              <img src="/img/greencheck.png" alt="green-tick" />
               <span>Prompt writing</span>
             </div>
             <div className="item">
-              <img src="/img/greencheck.png" alt="" />
+              <img src="/img/greencheck.png" alt="green-tick" />
               <span>Artwork delivery</span>
             </div>
             <div className="item">
-              <img src="/img/greencheck.png" alt="" />
+              <img src="/img/greencheck.png" alt="green-tick" />
               <span>Image upscaling</span>
             </div>
             <div className="item">
-              <img src="/img/greencheck.png" alt="" />
+              <img src="/img/greencheck.png" alt="green-tick" />
               <span>Additional design</span>
             </div>
           </div>
           <button>Continue</button>
         </div>
+        {/* right-end */}
       </div>
+      {/* container-end */}
     </div>
   );
 }
