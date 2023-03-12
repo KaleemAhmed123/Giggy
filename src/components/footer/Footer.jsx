@@ -21,23 +21,6 @@ function Footer() {
             <span>Sitemap</span>
           </div>
           <div className="item">
-            <h2>About</h2>
-            <span>Press & News</span>
-            <span>Partnerships</span>
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <span>Intellectual Property Claims</span>
-            <span>Investor Relations</span>
-            <span>Contact Sales</span>
-          </div>
-          <div className="item">
-            <h2>Support</h2>
-            <span>Help & Support</span>
-            <span>Trust & Safety</span>
-            <span>Selling on Liverr</span>
-            <span>Buying on Liverr</span>
-          </div>
-          <div className="item">
             <h2>Community</h2>
             <span>Customer Success Stories</span>
             <span>Community hub</span>
@@ -53,23 +36,40 @@ function Footer() {
           </div>
           <div className="item">
             <h2>More From Fiverr</h2>
-            <span>Liverr Business</span>
-            <span>Liverr Pro</span>
-            <span>Liverr Logo Maker</span>
-            <span>Liverr Guides</span>
+            <span>Giggy Business</span>
+            <span>Giggy Pro</span>
+            <span>Giggy Logo Maker</span>
+            <span>Giggy Guides</span>
             <span>Get Inspired</span>
-            <span>Liverr Select</span>
+            <span>Giggy Select</span>
             <span>ClearVoice</span>
-            <span>Liverr Workspace</span>
+            <span>Giggy Workspace</span>
             <span>Learn</span>
             <span>Working Not Working</span>
+          </div>
+          <div className="item">
+            <h2>About</h2>
+            <span>Press & News</span>
+            <span>Partnerships</span>
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <span>Intellectual Property Claims</span>
+            <span>Investor Relations</span>
+            <span>Contact Sales</span>
+          </div>
+          <div className="item">
+            <h2>Support</h2>
+            <span>Help & Support</span>
+            <span>Trust & Safety</span>
+            <span>Selling on Giggy</span>
+            <span>Buying on Giggy</span>
           </div>
         </div>
         <hr />
         <div className="bottom">
           <div className="left">
-            <h2>liverr</h2>
-            <span>© Liverr International Ltd. 2023</span>
+            <h2>Giggy</h2>
+            <span>© Giggy International Ltd. 2023</span>
           </div>
           <div className="right">
             <div className="social">

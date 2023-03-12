@@ -44,13 +44,13 @@ function Navbar() {
         {/* left logo */}
         <div className="logo">
           <Link className="link" to="/">
-            <span className="text">liverr</span>
+            <span className="text">Giggy</span>
           </Link>
           <span className="dot">.</span>
         </div>
         {/* right links */}
         <div className="links">
-          <span>Liverr Business</span>
+          <span>Giggy Business</span>
           <span>Explore</span>
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
