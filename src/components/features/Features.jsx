@@ -41,7 +41,7 @@ const Features = () => {
           </p>
         </div>
         <div className="item">
-          <video src="./img/promo.mp4" controls />
+          <video src="./img/promo.mp4" autoPlay muted controls />
         </div>
       </div>
     </div>
