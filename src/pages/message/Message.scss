@@ -54,6 +54,10 @@
                     color: gray;
                     font-weight: 300;
                 }
+                // critical
+                &:first-child{
+                    margin-top: 160px
+                }
             }
         }
 

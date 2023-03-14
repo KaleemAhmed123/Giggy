@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import profile from "/img/myPic.png";
 import "./Message.scss";
 
 const Message = () => {
@@ -7,7 +8,7 @@ const Message = () => {
     <div className="message">
       <div className="container">
         <span className="breadcrumbs">
-          <Link to="/messages">Messages</Link> > John Doe >
+          <Link to="/messages">Messages</Link> &gt; Kaleem Ahmed &gt;
         </span>
         <div className="messages">
           <div className="item">
@@ -23,10 +24,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia
@@ -47,10 +45,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia
@@ -71,10 +66,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia
@@ -95,10 +87,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia
@@ -119,10 +108,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia
@@ -155,10 +141,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia
@@ -167,10 +150,7 @@ const Message = () => {
             </p>
           </div>
           <div className="item owner">
-            <img
-              src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-              alt=""
-            />
+            <img src={profile} alt="user-profile" />
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos iure
               mollitia perspiciatis officiis voluptate? Sequi quae officia

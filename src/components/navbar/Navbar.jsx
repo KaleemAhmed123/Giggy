@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import profile from "../../../public/img/myPic.png";
 import "./Navbar.scss";
 
 function Navbar() {
@@ -57,10 +58,7 @@ function Navbar() {
           {/* if not logged in show signin and join button else pic and name */}
           {currentUser ? (
             <div className="user" onClick={() => setOpen(!open)}>
-              <img
-                src="https://images.pexels.com/photos/1115697/pexels-photo-1115697.jpeg?auto=compress&cs=tinysrgb&w=1600"
-                alt="user-profile"
-              />
+              <img src={profile} alt="user-profile" />
               <span>{currentUser?.username}</span>
               {/* open absolute profile menu- if seller then only Gigs and Add Gigs */}
               {open && (
