@@ -43,7 +43,7 @@ const Messages = () => {
           </tr>
           {/*  */}
           <tr className="active">
-            <td>Shaam Idrees</td>
+            <td>kaleem ahmed</td>
             <td>
               <Link to="/message/123" className="link">
                 {message.substring(0, 100)}...
