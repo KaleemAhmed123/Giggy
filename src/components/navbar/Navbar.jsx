@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import profile from "../../../public/img/myPic.png";
+import profile from "/img/myPic.png";
 import "./Navbar.scss";
 
 function Navbar() {

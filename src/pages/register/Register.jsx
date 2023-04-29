@@ -41,9 +41,10 @@ function Register() {
     try {
       await axiosUtil.post("/auth/register", {
         ...user,
-        img: url,
+        img: url, // databse has img name in schema
       });
-      navigate("/");
+
+      navigate("/login");
     } catch (err) {
       console.log(err);
     }
