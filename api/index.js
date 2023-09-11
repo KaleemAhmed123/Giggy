@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+// ROUTES
+import userRoute from "./routes/user.route.js";
+
 dotenv.config();
 
 const app = express();
@@ -15,7 +19,9 @@ const connect = async () => {
   }
 };
 
-app.listen(8800, () => {
+app.use("/api/user", userRoute);
+const port = 8800;
+app.listen(port, () => {
   connect();
-  console.log("Backend server is running!");
+  console.log(`Server running at ${port}`);
 });
