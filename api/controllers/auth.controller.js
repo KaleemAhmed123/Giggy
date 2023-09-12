@@ -1,12 +1,15 @@
-import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
+import createErrorObj from "../utils/error.js";
 
 ////////////
-export const register = async (req, res) => {
+export const register = async (req, res, next) => {
   try {
+    // TODO (may cause problem)
     const user = await User.findOne({ username: req.body.username });
-    if (user) return res.status(403).send("User with this name already exist");
+    if (user)
+      return next(createErrorObj(403, "User with this name already exist"));
 
     const hash = bcrypt.hashSync(req.body.password, 7);
     const newUser = new User({
@@ -15,24 +18,27 @@ export const register = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).send("User has been created");
+    res.status(201, "User has been created");
     // console.log("User", newUser);
   } catch (error) {
     console.log(error);
-    res.status(500).send(error.message);
+    // res.status(500).send(error.message);
+    next(err);
   }
 };
 
 ////////////
-export const login = async (req, res) => {
+export const login = async (req, res, next) => {
   try {
     // usename is unique will search with that
     const user = await User.findOne({ username: req.body.username });
-    if (!user) return res.status(404).send("User not exist with this name.");
+    if (!user)
+      return next(createErrorObj(404, "User not exist with this name."));
 
     // compare the hashed passwords and check for equality
     if ((await bcrypt.compare(req.body.password, user.password)) === false)
-      return res.status(400).send("Wrong password.");
+      return next(createErrorObj(400, "Wrong password."));
+    // we generate a token and in each subsequent req we use verifyToken utility
     else {
       const token = Jwt.sign(
         {
@@ -52,8 +58,20 @@ export const login = async (req, res) => {
     }
   } catch (error) {
     // console.log(error);
-    res.status(500).send(error.message);
+    // res.status(500).send(error.message);
+    next(error); // error obj at runtime
   }
 };
 
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => {
+  // scope: will use redis caching in future
+
+  // (deleting the accesToken)
+  res
+    .clearCookie("accesstoken", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(200)
+    .send("Logged out successfully.");
+};

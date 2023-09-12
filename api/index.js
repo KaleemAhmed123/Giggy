@@ -36,6 +36,16 @@ app.use("/api/gigs", gigRoute);
 app.use("/api/reviews", reviewRoute);
 
 ///////////////////////////////////
+
+// error handling middleware
+
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong";
+
+  return res.status(errorStatus).send(errorMessage);
+});
+
 const port = 8800;
 app.listen(port, () => {
   connect();
