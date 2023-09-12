@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 // everyThing on single GigPage inc priceContainer
 const gigSchema = new Schema(
   {
-    gigId: {
+    userId: {
       type: String,
       required: true,
     },

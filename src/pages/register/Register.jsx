@@ -18,6 +18,8 @@ function Register() {
     desc: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleChange = (e) => {
     setUser((prev) => {
       // [variable] notation- all are text
@@ -34,11 +36,13 @@ function Register() {
   // handle Submit- {user, cdn}
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading state to true
 
     // will return cloudinary cdn url
     const url = await uploadUtil(file);
 
     try {
+      setIsLoading(true);
       await axiosUtil.post("/auth/register", {
         ...user,
         img: url, // databse has img name in schema
@@ -47,11 +51,13 @@ function Register() {
       navigate("/login");
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
     //
   };
 
-  console.log(user);
+  // console.log(user);
   return (
     <div className="register">
       <form onSubmit={handleSubmit}>
@@ -94,7 +100,10 @@ function Register() {
             onChange={handleChange}
           />
 
-          <button type="submit">Register</button>
+          {/* Button with loading indicator */}
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Loading..." : "Register"}
+          </button>
         </div>
         {/* Right */}
         <div className="right">

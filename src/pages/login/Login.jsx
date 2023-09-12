@@ -7,6 +7,7 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -14,12 +15,15 @@ function Login() {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const res = await axiosUtil.post("/auth/login", { username, password });
       localStorage.setItem("currentUser", JSON.stringify(res.data));
       navigate("/");
     } catch (err) {
       // axios way
       setError(err?.response?.data);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,7 +48,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Loading...." : "Login"}
+        </button>
 
         {/* if err show err */}
         {error && error}
