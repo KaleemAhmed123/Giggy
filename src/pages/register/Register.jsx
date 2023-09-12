@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
+  const [file, setFile] = useState(null);
   // all info except file
   const [user, setUser] = useState({
     username: "",
@@ -16,7 +17,6 @@ function Register() {
     isSeller: false,
     desc: "",
   });
-  const [file, setFile] = useState(null);
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -24,7 +24,7 @@ function Register() {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  // its a checkbox
+  // that checkbox
   const handleSeller = (e) => {
     setUser((prev) => {
       return { ...prev, isSeller: e.target.checked };
@@ -50,6 +50,8 @@ function Register() {
     }
     //
   };
+
+  console.log(user);
   return (
     <div className="register">
       <form onSubmit={handleSubmit}>

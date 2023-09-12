@@ -19,7 +19,7 @@ function Login() {
       navigate("/");
     } catch (err) {
       // axios way
-      setError(err.response.data);
+      setError(err?.response?.data);
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import profile from "/img/myPic.png";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
+import newRequest from "../../utils/axiosUtil";
 
 function Navbar() {
   const downMenuItems = [
@@ -33,10 +33,20 @@ function Navbar() {
 
   // const currentUser = null
 
-  const currentUser = {
-    id: 1,
-    username: "kaleem",
-    isSeller: true,
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      // this will delete cookie
+      await newRequest.post("/auth/logout");
+      // and we'll delete from local storage
+      localStorage.setItem("currentUser", null);
+      navigate("/");
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -58,7 +68,10 @@ function Navbar() {
           {/* if not logged in show signin and join button else pic and name */}
           {currentUser ? (
             <div className="user" onClick={() => setOpen(!open)}>
-              <img src={profile} alt="user-profile" />
+              <img
+                src={currentUser.img || "/img/noavatar.jpg"}
+                alt="user-profile"
+              />
               <span>{currentUser?.username}</span>
               {/* open absolute profile menu- if seller then only Gigs and Add Gigs */}
               {open && (
@@ -79,7 +92,7 @@ function Navbar() {
                   <Link className="link" to="/messages">
                     Messages
                   </Link>
-                  <Link className="link" to="/">
+                  <Link className="link" onClick={handleLogout}>
                     Logout
                   </Link>
                 </div>
@@ -88,7 +101,9 @@ function Navbar() {
             </div>
           ) : (
             <>
-              <span>Sign in</span>
+              <Link className="link" to="/login">
+                <button>Sign In</button>
+              </Link>
               <Link className="link" to="/register">
                 <button>Join</button>
               </Link>

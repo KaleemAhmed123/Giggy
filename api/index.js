@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 
 // ROUTES
 import authRoute from "./routes/auth.route.js";
@@ -14,8 +15,11 @@ import cookieParser from "cookie-parser";
 
 dotenv.config();
 const app = express();
+
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
+
 mongoose.set("strictQuery", true);
 
 const connect = async () => {

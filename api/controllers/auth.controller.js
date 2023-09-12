@@ -18,12 +18,12 @@ export const register = async (req, res, next) => {
     });
 
     await newUser.save();
-    res.status(201, "User has been created");
+    res.status(201).send("User has been created.");
     // console.log("User", newUser);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     // res.status(500).send(error.message);
-    next(err);
+    return next(error);
   }
 };
 
@@ -68,10 +68,10 @@ export const logout = async (req, res) => {
 
   // (deleting the accesToken)
   res
-    .clearCookie("accesstoken", {
+    .clearCookie("accessToken", {
       sameSite: "none",
       secure: true,
     })
     .status(200)
-    .send("Logged out successfully.");
+    .send("User logged out successfully.");
 };
