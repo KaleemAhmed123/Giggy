@@ -44,10 +44,10 @@ export const login = async (req, res) => {
 
       const { password, ...restInfo } = user._doc;
       return res
-        .status(200)
         .cookie("accessToken", token, {
           httponly: true,
         })
+        .status(200)
         .send(restInfo);
     }
   } catch (error) {
