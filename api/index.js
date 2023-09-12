@@ -3,11 +3,17 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 // ROUTES
+import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
+import gigRoute from "./routes/gig.route.js";
+import reviewRoute from "./routes/review.route.js";
+import orderRoute from "./routes/order.route.js";
+import messageRoute from "./routes/message.route.js";
+import conversationRoute from "./routes/conversation.route.js";
 
 dotenv.config();
-
 const app = express();
+app.use(express.json());
 mongoose.set("strictQuery", true);
 
 const connect = async () => {
@@ -19,7 +25,15 @@ const connect = async () => {
   }
 };
 
-app.use("/api/user", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/messages", messageRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/gigs", gigRoute);
+app.use("/api/reviews", reviewRoute);
+
+///////////////////////////////////
 const port = 8800;
 app.listen(port, () => {
   connect();
