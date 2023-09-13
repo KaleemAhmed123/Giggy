@@ -53,14 +53,16 @@ function Gig() {
                 alt=""
               />
               <span>Anna Bell</span>
-              <div className="stars">
-                <img src="/img/star.png" alt="" />
-                <img src="/img/star.png" alt="" />
-                <img src="/img/star.png" alt="" />
-                <img src="/img/star.png" alt="" />
-                <img src="/img/star.png" alt="" />
-                <span>5</span>
-              </div>
+              {!isNaN(data.totalStars / data.starNumber) && (
+                <div className="stars">
+                  {Array(Math.round(data.totalStars / data.starNumber))
+                    .fill()
+                    .map((item, i) => (
+                      <img src="/img/star.png" alt="" key={i} />
+                    ))}
+                  <span>{Math.round(data.totalStars / data.starNumber)}</span>
+                </div>
+              )}
             </div>
             {/* image-slider */}
             <Slider slidesToShow={1} arrowsScroll={1} className="slider">
@@ -82,14 +84,18 @@ function Gig() {
                 />
                 <div className="info">
                   <span>Anna Bell</span>
-                  <div className="stars">
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <img src="/img/star.png" alt="" />
-                    <span>5</span>
-                  </div>
+                  {!isNaN(data.totalStars / data.starNumber) && (
+                    <div className="stars">
+                      {Array(Math.round(data.totalStars / data.starNumber))
+                        .fill()
+                        .map((item, i) => (
+                          <img src="/img/star.png" alt="" key={i} />
+                        ))}
+                      <span>
+                        {Math.round(data.totalStars / data.starNumber)}
+                      </span>
+                    </div>
+                  )}
                   <button>Contact Me</button>
                 </div>
               </div>
