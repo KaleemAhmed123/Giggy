@@ -1,4 +1,6 @@
 import express from "express";
+import verifyToken from "../middlewares/jwt.js";
+
 import {
   createReview,
   getReviews,
@@ -7,8 +9,8 @@ import {
 
 const router = express.Router();
 
-router.post("/", createReview);
+router.post("/", verifyToken, createReview);
 router.get("/:gigId", getReviews);
-router.delete("/:id", deleteReview);
+router.delete("/:id", verifyToken, deleteReview);
 
 export default router;
