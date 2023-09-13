@@ -1,7 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import "./Gigs.scss";
-import { gigs } from "../../data";
+// import { gigs } from "../../data";
 import GigCard from "../../components/gigCard/GigCard";
+import newRequest from "../../utils/axiosUtil.js";
+import { useLocation } from "react-router-dom";
 
 function Gigs() {
   const [sort, setSort] = useState("sales");
@@ -10,14 +13,37 @@ function Gigs() {
   const minRef = useRef(); // for vmap
   const maxRef = useRef();
 
+  const { search } = useLocation();
+
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ["gigs"],
+    queryFn: () =>
+      newRequest
+        .get(
+          `/gigs${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sortBy=${sort}`
+        )
+        .then((res) => {
+          return res.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        }),
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [sort]);
+
+  console.log(data);
+  // console.log(error);
+
   const reSort = (type) => {
     setSort(type);
     setOpen(false);
   };
 
   const apply = () => {
-    console.log(minRef.current.value);
-    console.log(maxRef.current.value);
+    refetch();
   };
 
   return (
@@ -50,7 +76,7 @@ function Gigs() {
                 {sort === "sales" ? (
                   <span onClick={() => reSort("createdAt")}>Newest</span>
                 ) : (
-                  <span onClick={() => reSort("sales")}>Best Selling</span>
+                  <span onClick={() => reSort("price")}>Best Selling</span>
                 )}
                 <span onClick={() => reSort("sales")}>Popular</span>
               </div>
@@ -60,9 +86,11 @@ function Gigs() {
         </div>
         {/* Card gallery */}
         <div className="cards">
-          {gigs.map((gig) => (
-            <GigCard key={gig.id} item={gig} />
-          ))}
+          {isLoading
+            ? "Loading..."
+            : error
+            ? "Something went wrong."
+            : data.map((gig) => <GigCard key={gig._id} item={gig} />)}
         </div>
         {/* gallery div end */}
       </div>

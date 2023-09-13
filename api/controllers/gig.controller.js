@@ -65,7 +65,7 @@ export const getGigs = async (req, res, next) => {
     }),
   };
   try {
-    const gigs = await Gig.find(filters);
+    const gigs = await Gig.find(filters).sort({ [allQuery.sort]: -1 });
     if (!gigs) next(createError(404, "Gigs not found."));
 
     res.status(200).send(gigs);
