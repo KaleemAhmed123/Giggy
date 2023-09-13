@@ -6,7 +6,7 @@ import newRequest from "../../utils/axiosUtil";
 
 const GigCard = ({ item }) => {
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: [`item.userId`],
+    queryKey: [`${item.userId}`],
     queryFn: () =>
       newRequest
         .get(`/users/${item.userId}`)
@@ -19,7 +19,7 @@ const GigCard = ({ item }) => {
   });
 
   return (
-    <Link to="/gig/" className="link">
+    <Link to={`/gig/${item._id}`} className="link">
       <div className="gigCard">
         {/* 50% area image */}
         <img src={item.cover} alt="gig-image" />

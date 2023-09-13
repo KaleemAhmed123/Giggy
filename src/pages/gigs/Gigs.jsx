@@ -13,6 +13,7 @@ function Gigs() {
   const minRef = useRef(); // for vmap
   const maxRef = useRef();
 
+  // for getting queries? on react app
   const { search } = useLocation();
 
   const { isLoading, error, data, refetch } = useQuery({
