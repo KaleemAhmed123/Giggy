@@ -29,6 +29,7 @@ function Gig() {
       newRequest.get(`/users/${userId}`).then((res) => {
         return res.data;
       }),
+    // now queryFn will run when we get the userId
     enabled: !!userId,
   });
 
@@ -118,7 +119,9 @@ function Gig() {
                     </div>
                     <div className="item">
                       <span className="title">Member since</span>
-                      <span className="desc">{dataUser.createdAt}</span>
+                      <span className="desc">
+                        {new Date(dataUser.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
                     <div className="item">
                       <span className="title">Avg. response time</span>
@@ -153,7 +156,7 @@ function Gig() {
             <div className="details">
               <div className="item">
                 <img src="/img/clock.png" alt="clock-img" />
-                <span>{data.deliveryDate} Days Delivery</span>
+                <span>{data.deliveryTime} Days Delivery</span>
               </div>
               <div className="item">
                 <img src="/img/recycle.png" alt="recycle-icon" />
@@ -161,12 +164,12 @@ function Gig() {
               </div>
             </div>
             <div className="features">
-              {data.features.map((feature) => {
-                <div className="item">
-                  <img src="/img/greencheck.png" alt="green-tick" />
+              {data.features.map((feature) => (
+                <div className="item" key={feature}>
+                  <img src="/img/greencheck.png" alt="" />
                   <span>{feature}</span>
-                </div>;
-              })}
+                </div>
+              ))}
             </div>
             <button>Continue</button>
           </div>

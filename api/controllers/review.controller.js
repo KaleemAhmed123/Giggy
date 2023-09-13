@@ -4,41 +4,45 @@ import createError from "../utils/error.js";
 
 // both gigId and userId needed
 export const createReview = async (req, res, next) => {
-  if (req.isSeller) next(createError(403, "Sellers cant create review."));
+  if (req.isSeller)
+    return next(createError(403, "Sellers can't create a review!"));
+
   const newReview = new Review({
     // added by verifyToken
     userId: req.userId,
     gigId: req.body.gigId,
     desc: req.body.desc,
-    start: req.body.start,
+    star: req.body.star,
   });
 
   try {
-    // if already posted review dont allow (need bith IDS)
-    const review = await Review.find({
-      userId: req.userId,
+    const review = await Review.findOne({
       gigId: req.body.gigId,
+      userId: req.userId,
     });
+    // if already posted review dont allow now
     if (review)
-      return next(createError(403, "You have already created review."));
+      return next(
+        createError(403, "You have already created a review for this gig!")
+      );
 
     const savedReview = await newReview.save();
 
-    // since giving review so update stars in gigModel
+    // updating the gig becz adding review affect gig start value
     await Gig.findByIdAndUpdate(req.body.gigId, {
       $inc: { totalStars: req.body.star, starNumber: 1 },
     });
 
     res.status(201).send(savedReview);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
 // every gigID has review if userID person
 export const getReviews = async (req, res, next) => {
   try {
-    const reviews = await Review.find({ gigId: req.body.gigId });
+    const reviews = await Review.find({ gigId: req.params.gigId });
     res.status(200).send(reviews);
   } catch (error) {
     next(error);

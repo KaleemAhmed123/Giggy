@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 // which GIG, which USER, actual COMMENT, given STAR
 const reviewSchema = new Schema(
