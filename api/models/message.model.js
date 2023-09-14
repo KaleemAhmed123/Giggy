@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 // that blue or white box (img, desc)
 const messageSchema = new Schema(

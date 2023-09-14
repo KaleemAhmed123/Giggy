@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Messages.scss";
 import moment from "moment/moment";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

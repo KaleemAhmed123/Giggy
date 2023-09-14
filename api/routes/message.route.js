@@ -1,4 +1,5 @@
 import express from "express";
+import verifyToken from "../middlewares/jwt.js";
 import {
   createMessage,
   getMessages,
@@ -6,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.post("/", createMessage);
-router.get("/:id", getMessages);
+router.post("/", verifyToken, createMessage);
+router.get("/:id", verifyToken, getMessages);
 
 export default router;
