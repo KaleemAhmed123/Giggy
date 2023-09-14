@@ -2,7 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const conversationSchema = new Schema(
   {
-    id: {
+    roomId: {
       type: String,
       required: true,
       unique: true,
