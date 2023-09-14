@@ -5,6 +5,6 @@ import { getOrders, createOrder } from "../controllers/order.controller.js";
 const router = express.Router();
 
 router.post("/:gigId", verifyToken, createOrder);
-router.get("/", getOrders);
+router.get("/", verifyToken, getOrders);
 
 export default router;
