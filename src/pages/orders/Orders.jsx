@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Orders.scss";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/axiosUtil.js";
@@ -7,6 +7,8 @@ import newRequest from "../../utils/axiosUtil.js";
 
 const Orders = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+  const navigate = useNavigate();
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
@@ -20,6 +22,27 @@ const Orders = () => {
           console.log(error);
         }),
   });
+
+  const handleConversation = async (order) => {
+    const { sellerId, buyerId } = order;
+    const conversationId = sellerId + buyerId;
+
+    try {
+      const individualConv = await newRequest.get(
+        `/conversation/single/${conversationId}`
+      );
+    } catch (error) {
+      // means first time our custom indicator 404
+      if (error.response.status === 404) {
+        const newConversation = await newRequest.post(`/conversations`, {
+          to: currentUser.isSeller ? buyerId : sellerId,
+        });
+
+        // move to message page now
+        navigate(`/message/${newConversation.data.roomId}`);
+      } else next(error);
+    }
+  };
 
   return (
     <div className="orders">
@@ -48,7 +71,12 @@ const Orders = () => {
                   <td>{order.title}</td>
                   <td>{order.price}</td>
                   <td>
-                    <img className="message" src="./img/message.png" alt="" />
+                    <img
+                      // bcz we need buyer and seller id so (order)
+                      onClick={() => handleConversation(order)}
+                      className="message"
+                      src="./img/message.png"
+                    />
                   </td>
                 </tr>
               ))}

@@ -55,6 +55,8 @@ export const updateConversation = async (req, res, next) => {
 export const getSingleConversation = async (req, res, next) => {
   try {
     const conversation = await Conversation.findOne({ roomId: req.params.id });
+    if (!conversation) return next(createError(404, "Not found"));
+    // using this 404 indicator we start new conversation in createConv
     res.status(200).send(conversation);
   } catch (error) {
     next(error);
