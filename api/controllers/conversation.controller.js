@@ -12,7 +12,7 @@ export const createConversation = async (req, res, next) => {
   const newConversation = new Conversation({
     roomId: sellerPlusBuyerID,
     // seller id token se mil jaegi warna body se buyer id aegai "to"
-    sellerId: req.isSeller ? userId : req.body.to,
+    sellerId: req.isSeller ? req.userId : req.body.to,
     buyerId: req.isSeller ? req.body.to : req.userId,
     readBySeller: req.isSeller,
     readByBuyer: !req.isSeller,
@@ -28,30 +28,32 @@ export const createConversation = async (req, res, next) => {
 
 // for updating readBySeller and readByBuyer info
 // if we are buyer then bydef readByBuyer will be true and seller false and in seller viceversa
+// Update Conversation
 export const updateConversation = async (req, res, next) => {
   try {
     const updatedConversation = await Conversation.findOneAndUpdate(
-      // room id (sellerID + buyerID)
-      { roomId: req.params.id },
+      { roomId: req.params.roomId },
       {
         $set: {
-          readBySeller: req.isSeller,
-          readByBuyer: !req.isSeller,
+          ...(req.isSeller ? { readBySeller: true } : { readByBuyer: true }),
         },
       },
-      // import to get new else it will give old results
       { new: true }
     );
 
-    res.status(200).send(updateConversation);
-  } catch (error) {
-    next(error);
+    res.status(200).send(updatedConversation);
+  } catch (err) {
+    next(err);
   }
 };
 
-export const getSingleConversation = async (req, res) => {
+// room id (sellerID + buyerID)
+// one is already T and when clicked mark as read we make both true
+// important to get new else it will give old results
+
+export const getSingleConversation = async (req, res, next) => {
   try {
-    const conversation = Conversation.findOne({ roomId: req.params.id });
+    const conversation = await Conversation.findOne({ roomId: req.params.id });
     res.status(200).send(conversation);
   } catch (error) {
     next(error);
@@ -59,14 +61,14 @@ export const getSingleConversation = async (req, res) => {
 };
 
 // for all chat messages for a user (seller or buyer)
-export const getConversations = async (req, res) => {
+// this is how we pass conditional prop in mongoose (req.isSeller ? {sellerId: req.userId}: {buyerId: req.userId})
+export const getConversations = async (req, res, next) => {
   try {
-    // this is how we pass conditional prop in mongoose (req.isSeller ? {sellerId: req.userId}: {buyerId: req.userId})
-    const conversations = Conversation.find(
+    const conversations = await Conversation.find(
       req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }
-    );
+    ).sort({ updatedAt: -1 });
     res.status(200).send(conversations);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
