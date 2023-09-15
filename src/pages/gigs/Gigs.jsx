@@ -35,7 +35,7 @@ function Gigs() {
     refetch();
   }, [sort]);
 
-  console.log(data);
+  // console.log(data);
   // console.log(error);
 
   const reSort = (type) => {

@@ -3,53 +3,51 @@ import createError from "../utils/error.js";
 import Order from "../models/order.model.js";
 import Stripe from "stripe";
 
-// after intent we'll create order
 export const intent = async (req, res, next) => {
-  const stripe = new Stripe(process.env.STRIPE_KEY);
+  try {
+    const stripe = new Stripe(process.env.STRIPE_KEY);
 
-  const gig = await Gig.findById(req.params.gigId);
+    // Retrieve the gig based on the provided ID
+    const gig = await Gig.findById(req.params.id);
 
-  // Create a PaymentIntent with the order amount and currency
-  const paymentIntent = await stripe.paymentIntents.create({
-    // amount: req.body.price,
-    amount: gig.price * 10,
-    currency: "inr",
-    // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
-    automatic_payment_methods: {
-      enabled: true,
-    },
-  });
+    if (!gig) {
+      // Handle the case where the gig is not found
+      return next(createError(404, "Gig not found"));
+    }
 
-  const newOrder = new Order({
-    gigId: gig._id,
-    img: gig.cover,
-    title: gig.title,
-    buyerId: req.userId, // the user is buyer
-    sellerId: gig.userId, // whose gig (every gig we gave userId: by which user)
-    price: gig.price,
-    // payment_intent: "RandomNow",
-    payment_intent: paymentIntent.id,
-  });
+    // Create a PaymentIntent with the order amount and currency
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: gig.price * 100, // Convert to the required currency subunit (e.g., cents)
+      currency: "inr",
+      // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
 
-  await newOrder.save();
-  /// will send stripe id
-  res.status(201).send({
-    clientSecret: paymentIntent.client_secret,
-  });
+    // Create a new order using data from the gig and paymentIntent
+    const newOrder = new Order({
+      gigId: gig._id,
+      img: gig.cover,
+      title: gig.title,
+      buyerId: req.userId, // the user is a buyer
+      sellerId: gig.userId, // whose gig (every gig we gave userId: by which user)
+      price: gig.price,
+      payment_intent: paymentIntent.id,
+    });
+
+    await newOrder.save();
+
+    // Send the clientSecret back to the client for payment confirmation
+    res.status(201).send({
+      clientSecret: paymentIntent.client_secret, // Corrected property name
+    });
+  } catch (error) {
+    console.error("Error in intent route:", error);
+    next(error);
+  }
 };
 
-// export const createOrder = async (req, res, next) => {
-//   try {
-//     // we'll take almost evrything from gig itself not from user
-//     const gig = await Gig.findById(req.params.gigId);
-//     if (!gig) return next(createError(403, "No gig found."));
-
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-// HAS SOME ISSUE
 export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
@@ -59,6 +57,7 @@ export const getOrders = async (req, res, next) => {
 
     res.status(200).send(orders);
   } catch (err) {
+    console.error("Error in getOrders route:", err);
     next(err);
   }
 };

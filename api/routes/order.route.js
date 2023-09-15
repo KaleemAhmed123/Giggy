@@ -1,10 +1,6 @@
 import express from "express";
 import verifyToken from "../middlewares/jwt.js";
-import {
-  getOrders,
-  createOrder,
-  intent,
-} from "../controllers/order.controller.js";
+import { getOrders, intent, confirm } from "../controllers/order.controller.js";
 
 const router = express.Router();
 
@@ -12,6 +8,8 @@ const router = express.Router();
 //
 router.get("/", verifyToken, getOrders);
 // id for getting price from db not from body
-router.post("/create-payment-intent/:gigId", verifyToken, intent);
+router.post("/create-payment-intent/:id", verifyToken, intent);
+//
+router.put("/", verifyToken, confirm);
 
 export default router;

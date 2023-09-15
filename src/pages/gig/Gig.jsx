@@ -1,13 +1,14 @@
 import React from "react";
 import "./Gig.scss";
 import { Slider } from "infinite-react-carousel/lib";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/axiosUtil.js";
 import Reviews from "../../components/reviews/Reviews";
 
 function Gig() {
   const { id } = useParams();
+  console.log(id);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
@@ -171,7 +172,9 @@ function Gig() {
                 </div>
               ))}
             </div>
-            <button>Continue</button>
+            <Link to={`/pay/${id}`}>
+              <button>Continue</button>
+            </Link>
           </div>
           {/* right-end */}
         </div>
