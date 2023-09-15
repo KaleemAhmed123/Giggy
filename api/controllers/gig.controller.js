@@ -1,4 +1,3 @@
-import gigModel from "../models/gig.model.js";
 import Gig from "../models/gig.model.js";
 import createError from "../utils/error.js";
 
@@ -38,7 +37,7 @@ export const deleteGig = async (req, res, next) => {
 
 export const getGig = async (req, res, next) => {
   try {
-    const gig = await Gig.findById(req.params.id);
+    const gig = await Gig.findById({ userId: req.params.id });
     if (!gig) next(createError(404, "Gig not found."));
 
     res.status(200).send(gig);

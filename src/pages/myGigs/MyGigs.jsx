@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/axiosUtil.js";
 
 function MyGigs() {
-  const currentUser = getCurrentUser();
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const queryClient = useQueryClient();
 
@@ -14,7 +14,7 @@ function MyGigs() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["myGigs"],
     queryFn: () =>
-      newRequest.get(`/gigs?userId=${currentUser.id}`).then((res) => {
+      newRequest.get(`/gigs/single/${currentUser._id}`).then((res) => {
         return res.data;
       }),
   });
