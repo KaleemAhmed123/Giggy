@@ -1,0 +1,47 @@
+/* Success.scss */
+.success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.success-icon {
+    font-size: 5rem;
+    color: #4caf50;
+}
+
+.success-heading {
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+.success-message {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #333;
+    /* Dark gray color for text */
+}
+
+.focus {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.7rem;
+}
+
+.success-link {
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: #007bff;
+    /* Blue color for link */
+    transition: color 0.3s;
+}
+
+.success-link:hover {
+    color: #0056b3;
+    /* Darker blue color on hover */
+}

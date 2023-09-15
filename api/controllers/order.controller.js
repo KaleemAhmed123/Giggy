@@ -62,4 +62,22 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
-export const confirm = async (req, res, next) => {};
+// after getting payment intent we mark the completed as true
+export const confirm = async (req, res, next) => {
+  try {
+    const order = Order.findByIdAndUpdate(
+      {
+        payment_intent: req.params.payment_intent,
+      },
+      {
+        $set: {
+          isCompleted: true,
+        },
+      }
+    );
+
+    res.status(200).send("order confirmed.");
+  } catch (error) {
+    next(error);
+  }
+};

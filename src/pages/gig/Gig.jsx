@@ -8,7 +8,7 @@ import Reviews from "../../components/reviews/Reviews";
 
 function Gig() {
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["gig"],
