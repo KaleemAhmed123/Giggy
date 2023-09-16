@@ -30,6 +30,10 @@
                 color: gray;
                 font-size: 18px;
             }
+            .asSeller {
+                font-size: larger;
+                color: rgb(248, 68, 68);
+            }
 
             input,
             textarea {
@@ -70,6 +74,7 @@
                     width: 0;
                     height: 0;
                 }
+                
 
                 .slider {
                     position: absolute;

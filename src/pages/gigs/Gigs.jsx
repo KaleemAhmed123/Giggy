@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Gigs.scss";
 import GigCard from "../../components/gigCard/GigCard";
 import { useQuery } from "@tanstack/react-query";
@@ -8,28 +8,28 @@ import { useLocation } from "react-router-dom";
 function Gigs() {
   const [sort, setSort] = useState("sales");
   const [open, setOpen] = useState(false);
-  const minRef = useRef();
-  const maxRef = useRef();
+  const [minValue, setMinValue] = useState(""); // State for min value
+  const [maxValue, setMaxValue] = useState(""); // State for max value
 
   const { search } = useLocation();
 
-  const queryKey = search ? ["gigs"] : ["gigs", "min", "max", "sort"];
-
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey,
+    queryKey: ["gigs"],
     queryFn: async () => {
       let url = "/gigs";
 
       if (search) {
-        url += `${search}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`;
+        url += `${search}min=${parseInt(minValue)}&max=${parseInt(
+          maxValue
+        )}&sort=${sort}`;
+      } else {
+        url += `?min=${minValue}&max=${maxValue}`;
       }
 
       const res = await newRequest.get(url);
       return res.data;
     },
   });
-
-  console.log(data);
 
   const reSort = (type) => {
     setSort(type);
@@ -38,7 +38,7 @@ function Gigs() {
 
   useEffect(() => {
     refetch();
-  }, [sort]);
+  }, [sort, minValue, maxValue]); // Refetch when sort or filter values change
 
   const apply = () => {
     refetch();
@@ -55,8 +55,18 @@ function Gigs() {
         <div className="menu">
           <div className="left">
             <span>Budget</span>
-            <input ref={minRef} type="number" placeholder="min" />
-            <input ref={maxRef} type="number" placeholder="max" />
+            <input
+              type="number"
+              placeholder="min"
+              value={minValue}
+              onChange={(e) => setMinValue(e.target.value)} // Update min value
+            />
+            <input
+              type="number"
+              placeholder="max"
+              value={maxValue}
+              onChange={(e) => setMaxValue(e.target.value)} // Update max value
+            />
             <button onClick={apply}>Apply</button>
           </div>
           <div className="right">

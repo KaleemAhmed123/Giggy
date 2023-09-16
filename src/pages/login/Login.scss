@@ -16,9 +16,12 @@
             border-left: 1px solid lightgray;
         }
 
-        label {
+        .gray, label {
             color: gray;
             font-size: 22px;
+        }
+        .gray {
+            font-size: 18px;
         }
 
         input,
@@ -45,6 +48,10 @@
         span {
             color: red;
             font-size: 12px;
+        }
+        .asSeller {
+            font-size: larger;
+            color: rgb(248, 68, 68);
         }
     }
 }

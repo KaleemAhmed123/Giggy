@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Add = () => {
   const [singleFile, setSingleFile] = useState(undefined);
+  const [submitError, setSubmitError] = useState(""); // New state for error message
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -21,6 +22,7 @@ const Add = () => {
       payload: { name: e.target.name, value: e.target.value },
     });
   };
+
   const handleFeature = (e) => {
     e.preventDefault();
     dispatch({
@@ -57,15 +59,25 @@ const Add = () => {
       return newRequest.post("/gigs", gig);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["myGigs"]);
+      // Redirect to /myGigs when gig creation is successful
+      navigate(`/myGigs`);
+    },
+    onError: (err) => {
+      // Set the error message when there's an error during gig creation
+      setSubmitError(err?.response?.data || "An error occurred.");
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // our state obj is same as model req (checked)
-    mutation.mutate(state);
-    navigate(`/myGigs`);
+    setSubmitError(""); // Clear previous error message
+
+    // Ensure the mutation has completed before navigating
+    try {
+      await mutation.mutateAsync(state);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -109,8 +121,11 @@ const Add = () => {
                 />
               </div>
               <button onClick={handleUpload}>
-                {uploading ? "uploading" : "Upload"}
+                {uploading ? "uploading..." : "Upload"}
               </button>
+              {submitError && (
+                <span className="red">Make sure to click upload</span>
+              )}
             </div>
             <label htmlFor="">Description</label>
             <textarea
@@ -122,6 +137,7 @@ const Add = () => {
               onChange={handleChange}
             ></textarea>
             <button onClick={handleSubmit}>Create</button>
+            {submitError && <div className="red">{submitError}</div>}
           </div>
           <div className="details">
             <label htmlFor="">Service Title</label>

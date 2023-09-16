@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Register.scss";
 import uploadUtil from "../../utils/uploadUtil";
 import axiosUtil from "../../utils/axiosUtil";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
@@ -104,10 +104,18 @@ function Register() {
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Loading..." : "Register"}
           </button>
+          <Link className="asSeller" to="/login">
+            Already got an account
+          </Link>
         </div>
+
         {/* Right */}
         <div className="right">
           <h1>I want to become a seller</h1>
+          <span className="asSeller">
+            For looking all features of project sign up as SELLER - toggle
+            button below ⬇️
+          </span>
 
           <div className="toggle">
             <label htmlFor="">Activate the seller account</label>

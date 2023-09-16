@@ -1,7 +1,7 @@
+// for conversation bw seller and buyer that right icon initiates
 import mongoose, { Schema } from "mongoose";
 
-// that order page individual items
-const orderSchema = new Schema(
+const OrderSchema = new Schema(
   {
     gigId: {
       type: String,
@@ -19,7 +19,7 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
-    // for conversation bw seller and buyer that right icon initiates
+    // that order page individual items
     sellerId: {
       type: String,
       required: true,
@@ -34,7 +34,7 @@ const orderSchema = new Schema(
     },
     payment_intent: {
       type: String,
-      default: false,
+      required: true,
     },
   },
   {
@@ -42,4 +42,4 @@ const orderSchema = new Schema(
   }
 );
 
-export default mongoose.model("Order", orderSchema);
+export default mongoose.model("Order", OrderSchema);

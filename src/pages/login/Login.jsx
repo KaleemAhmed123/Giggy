@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Login.scss";
 import axiosUtil from "../../utils/axiosUtil";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -51,6 +51,24 @@ function Login() {
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Loading...." : "Login"}
         </button>
+
+        <Link className="asSeller" to="/register">
+          Wanna create an account ?
+        </Link>
+
+        <div className="gray">
+          <div>sample ID's for testing: </div>
+          <hr />
+          <div>username: arpan nandan</div>
+          <div>password: 12345</div>
+          <div>its a seller id</div>
+          <hr />
+
+          <div>username: kaleem ahmed</div>
+          <div>password: 12345</div>
+          <div>its a buyer id</div>
+          <hr />
+        </div>
 
         {/* if err show err */}
         {error && error}

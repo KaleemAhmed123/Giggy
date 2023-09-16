@@ -47,11 +47,6 @@ function Navbar() {
     }
   };
 
-  const handleExploreClick = () => {
-    // Programmatically navigate to the "/gigs" route when "Explore" is clicked
-    navigate("/gigs");
-  };
-
   return (
     <div className={`navbar ${active || pathname !== "/" ? "active" : ""}`}>
       <div className="container">
@@ -65,7 +60,9 @@ function Navbar() {
         {/* right links */}
         <div className="links">
           <span>Giggy Business</span>
-          <span onClick={handleExploreClick}>Explore</span>
+          <Link className="link" to={"/gigs"}>
+            Explore
+          </Link>
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {/* if not logged in show signin and join button else pic and name */}
