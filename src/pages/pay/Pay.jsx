@@ -1,4 +1,3 @@
-// stripe says outside the comp so (pubKey no need to hide)
 import React, { useEffect, useState } from "react";
 import "./Pay.scss";
 import { loadStripe } from "@stripe/stripe-js";

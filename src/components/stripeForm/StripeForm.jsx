@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./StripeForm.scss";
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -7,7 +6,7 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-export default function StripeForm() {
+const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -48,13 +47,19 @@ export default function StripeForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
+
     setIsLoading(true);
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
+        // Make sure to change this to your payment completion page
         return_url: "http://localhost:5173/success",
       },
     });
@@ -93,4 +98,6 @@ export default function StripeForm() {
       {message && <div id="payment-message">{message}</div>}
     </form>
   );
-}
+};
+
+export default CheckoutForm;

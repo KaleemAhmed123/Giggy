@@ -19,9 +19,10 @@ function Gigs() {
       let url = "/gigs";
 
       if (search) {
-        url += `${search}min=${parseInt(minValue)}&max=${parseInt(
-          maxValue
-        )}&sort=${sort}`;
+        url += `${search}&sort=${sort}`;
+        if (!isNaN(minValue) && isNaN(maxValue)) {
+          url += `&min=${parseInt(minValue)}&max=${parseInt(maxValue)}`;
+        }
       } else {
         url += `?min=${minValue}&max=${maxValue}`;
       }
