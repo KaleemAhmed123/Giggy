@@ -1,25 +1,23 @@
 import React from "react";
-import "./MyGigs.scss";
 import { Link } from "react-router-dom";
-import getCurrentUser from "../../utils/getCurrentUser";
+import "./MyGigs.scss";
+import getCurrentUser from "../../utils/getCurrentUser.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/axiosUtil.js";
 
 function MyGigs() {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = getCurrentUser();
 
   const queryClient = useQueryClient();
 
-  // userId lcalstorage se - currentUser.id
   const { isLoading, error, data } = useQuery({
     queryKey: ["myGigs"],
     queryFn: () =>
-      newRequest.get(`/gigs/single/${currentUser._id}`).then((res) => {
+      newRequest.get(`/gigs?userId=${currentUser._id}`).then((res) => {
         return res.data;
       }),
   });
 
-  // and using our gigId we can delete gig
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.delete(`/gigs/${id}`);
@@ -50,31 +48,33 @@ function MyGigs() {
             )}
           </div>
           <table>
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Price</th>
-              <th>Sales</th>
-              <th>Action</th>
-            </tr>
-            {data.map((gig) => (
-              <tr key={gig._id}>
-                <td>
-                  <img className="image" src={gig.cover} alt="" />
-                </td>
-                <td>{gig.title}</td>
-                <td>{gig.price}</td>
-                <td>{gig.sales}</td>
-                <td>
-                  <img
-                    className="delete"
-                    src="./img/delete.png"
-                    alt=""
-                    onClick={() => handleDelete(gig._id)}
-                  />
-                </td>
+            <tbody>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Sales</th>
+                <th>Action</th>
               </tr>
-            ))}
+              {data.map((gig) => (
+                <tr key={gig._id}>
+                  <td>
+                    <img className="image" src={gig.cover} alt="" />
+                  </td>
+                  <td>{gig.title}</td>
+                  <td>{gig.price}</td>
+                  <td>{gig.sales}</td>
+                  <td>
+                    <img
+                      className="delete"
+                      src="./img/delete.png"
+                      alt=""
+                      onClick={() => handleDelete(gig._id)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       )}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Reviews.scss";
 import Review from "../review/Review";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -6,6 +6,7 @@ import newRequest from "../../utils/axiosUtil";
 
 const Reviews = ({ gigId }) => {
   const queryClient = useQueryClient();
+  const [errorText, setErrorText] = useState("");
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["reviews"],
@@ -24,14 +25,21 @@ const Reviews = ({ gigId }) => {
       // invalidate add our our data in reviews and refetches
       queryClient.invalidateQueries(["reviews"]);
     },
+    onError: (err) => {
+      setErrorText(err?.response?.data);
+    },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const desc = e.target[0].value;
     const star = e.target[1].value;
+
     mutation.mutate({ gigId, desc, star });
+    setErrorText(""); // Clear any previous error message
   };
+
+  // console.log(errorText);
 
   return (
     <div className="reviews">
@@ -45,6 +53,7 @@ const Reviews = ({ gigId }) => {
         <h3>Add a review</h3>
         <form action="" className="addForm" onSubmit={handleSubmit}>
           <input type="text" placeholder="write your opinion" />
+          {errorText && <p className="error">{errorText}</p>}
           <select name="" id="">
             <option value={1}>1</option>
             <option value={2}>2</option>

@@ -10,13 +10,9 @@ import verifyToken from "../middlewares/jwt.js";
 
 const router = express.Router();
 
-router.get("/single/:id", getGig);
-// for all gigS
-router.get("/", getGigs);
-// user must be logged in so verifyToken
 router.post("/", verifyToken, createGig);
-// check gigId with tokenId if match allow
 router.delete("/:id", verifyToken, deleteGig);
-//
+router.get("/single/:id", getGig);
+router.get("/", getGigs);
 
 export default router;

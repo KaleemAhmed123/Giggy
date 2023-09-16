@@ -34,6 +34,11 @@ function Gig() {
     enabled: !!userId,
   });
 
+  function handleContactClick(phoneNumber) {
+    const telLink = `tel:${phoneNumber}`;
+    window.location.href = telLink;
+  }
+
   return (
     <div className="gig">
       {isLoading ? (
@@ -74,11 +79,15 @@ function Gig() {
               </div>
             )}
             {/* image-slider */}
-            <Slider slidesToShow={1} arrowsScroll={1} className="slider">
-              {data.images.map((img) => (
-                <img key={img} src={img} alt="" />
-              ))}
-            </Slider>
+            {data.images && data.images.length > 0 ? (
+              <Slider slidesToShow={1} arrowsScroll={1} className="slider">
+                {data.images?.map((img) => (
+                  <img key={img} src={img} alt="" />
+                ))}
+              </Slider>
+            ) : (
+              <p>No images available</p>
+            )}
             {/* About gig */}
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
@@ -108,9 +117,12 @@ function Gig() {
                         </span>
                       </div>
                     )}
-                    <button>Contact Me</button>
+                    <button onClick={() => handleContactClick(data.phone)}>
+                      Contact Me
+                    </button>
                   </div>
                 </div>
+
                 {/* about user box => From-since-avg-last-lang-hr-desc */}
                 <div className="box">
                   <div className="items">
@@ -165,7 +177,7 @@ function Gig() {
               </div>
             </div>
             <div className="features">
-              {data.features.map((feature) => (
+              {data.features?.map((feature) => (
                 <div className="item" key={feature}>
                   <img src="/img/greencheck.png" alt="" />
                   <span>{feature}</span>

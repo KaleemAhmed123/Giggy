@@ -15,7 +15,7 @@ function Navbar() {
     "Business",
     "Lifestyle",
   ];
-  const [active, setActive] = useState(false); // for scroll evemt false on start
+  const [active, setActive] = useState(false); // for scroll event, false on start
   const [open, setOpen] = useState(false); // for profile menu
 
   const { pathname } = useLocation();
@@ -31,22 +31,25 @@ function Navbar() {
     };
   }, []);
 
-  // const currentUser = null
-
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      // this will delete cookie
+      // This will delete the cookie
       await newRequest.post("/auth/logout");
-      // and we'll delete from local storage
+      // And we'll delete from local storage
       localStorage.setItem("currentUser", null);
       navigate("/");
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const handleExploreClick = () => {
+    // Programmatically navigate to the "/gigs" route when "Explore" is clicked
+    navigate("/gigs");
   };
 
   return (
@@ -62,7 +65,7 @@ function Navbar() {
         {/* right links */}
         <div className="links">
           <span>Giggy Business</span>
-          <span>Explore</span>
+          <span onClick={handleExploreClick}>Explore</span>
           <span>English</span>
           {!currentUser?.isSeller && <span>Become a Seller</span>}
           {/* if not logged in show signin and join button else pic and name */}
@@ -96,7 +99,6 @@ function Navbar() {
                     Logout
                   </Link>
                 </div>
-                // end menu end
               )}
             </div>
           ) : (

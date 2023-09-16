@@ -13,6 +13,8 @@ const Add = () => {
 
   const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
 
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
   const handleChange = (e) => {
     dispatch({
       type: "CHANGE_INPUT",
@@ -63,7 +65,7 @@ const Add = () => {
     e.preventDefault();
     // our state obj is same as model req (checked)
     mutation.mutate(state);
-    // navigate("/mygigs")
+    navigate(`/myGigs`);
   };
 
   return (
@@ -80,7 +82,13 @@ const Add = () => {
               onChange={handleChange}
             />
             <label htmlFor="">Category</label>
-            <select name="cat" id="cat" onChange={handleChange}>
+            <select
+              name="cat"
+              id="cat"
+              onChange={handleChange}
+              // defaultValue="design"
+            >
+              <option value=""></option>
               <option value="design">Design</option>
               <option value="web">Web Development</option>
               <option value="animation">Animation</option>
