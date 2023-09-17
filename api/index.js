@@ -16,7 +16,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
 
-app.use(cors({ origin: "https://giggy-api.onrender.com", credentials: true }));
+app.use(cors({ origin: "https://giggy.netlify.app", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

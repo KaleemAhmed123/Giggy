@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const newRequest = axios.create({
-  baseURL: "https://giggy-api.onrender.com/api/",
+  baseURL: "https://giggy-api.onrender.com",
   withCredentials: true,
 });
 
