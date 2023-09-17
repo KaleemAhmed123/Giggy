@@ -3,6 +3,8 @@
     justify-content: center;
     color: #666;
     margin: 50px 0px;
+    overflow-x: auto;
+    /* Add horizontal scrolling for smaller screens */
 
     img {
         width: 24px;
@@ -15,6 +17,8 @@
         .top {
             display: flex;
             justify-content: space-between;
+            overflow-x: auto;
+            /* Add overflow for horizontal scrolling */
 
             .item {
                 display: flex;
@@ -24,6 +28,11 @@
                 h2 {
                     font-size: 16px;
                     color: #555;
+
+                    @media screen and (max-width: 768px) {
+                        margin-top: 15px;
+                        /* Add margin-top for mobile and tablet */
+                    }
                 }
 
                 span {
@@ -40,13 +49,20 @@
 
         .bottom {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            /* Display columns for mobile and tablet */
 
-            .left {
+            @media screen and (min-width: 769px) {
+                flex-direction: row;
+                gap: 100px;
+            }
+
+            .left,
+            .right {
                 width: max-content;
                 display: flex;
-                align-items: center;
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 20px;
 
                 span {
@@ -56,20 +72,61 @@
             }
 
             .right {
-                width: max-content;
-                display: flex;
-                align-items: center;
-                gap: 30px;
+                margin-top: 10px;
+
+                @media screen and (min-width: 769px) {
+                    flex-direction: row;
+                    align-items: center;
+                }
 
                 .social {
                     display: flex;
-                    gap: 20px;
+                    gap: 8px;
+                    margin-top: 10px;
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
                 }
 
                 .link {
                     display: flex;
                     align-items: center;
                     gap: 10px;
+
+                    img {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        .container {
+            .top {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                /* Adjust to start on a new line */
+
+                .item {
+                    width: 50%;
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .container {
+            .top {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                /* Adjust to start on a new line */
+
+                .item {
+                    width: 100%;
                 }
             }
         }

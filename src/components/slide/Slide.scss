@@ -4,8 +4,9 @@
     padding: 100px 0px;
 
     .container {
-        width: 82%;
+        width: 100%; // Set the container width to 100% for responsiveness
         position: relative;
+        margin-left: 25px;
     }
 
     .carousel-initialized {
@@ -26,5 +27,12 @@
 
     .carousel-prev {
         left: -25px;
+    }
+
+    // Add media query for tablet and larger screens
+    @media (min-width: 768px) {
+        .container {
+            width: 82%; // Adjust container width for tablets and larger screens
+        }
     }
 }
