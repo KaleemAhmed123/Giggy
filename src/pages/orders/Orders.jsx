@@ -2,48 +2,37 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Orders.scss";
 import { useQuery } from "@tanstack/react-query";
-import newRequest from "../../utils/axiosUtil.js";
-// Almost same as myGig Page
+import newRequest from "../../utils/axiosUtil";
 
 const Orders = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const navigate = useNavigate();
-
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      newRequest
-        .get(`/orders`)
-        .then((res) => {
-          return res.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        }),
+      newRequest.get(`/orders`).then((res) => {
+        return res.data;
+      }),
   });
 
-  const handleConversation = async (order) => {
-    const { sellerId, buyerId } = order;
-    const conversationId = sellerId + buyerId;
+  const handleContact = async (order) => {
+    const sellerId = order.sellerId;
+    const buyerId = order.buyerId;
+    const id = sellerId + buyerId;
 
     try {
-      const individualConv = await newRequest.get(
-        `/conversation/single/${conversationId}`
-      );
-    } catch (error) {
-      // means first time our custom indicator 404
-      if (error.response.status === 404) {
-        const newConversation = await newRequest.post(`/conversations`, {
-          to: currentUser.isSeller ? buyerId : sellerId,
+      const res = await newRequest.get(`/conversations/single/${id}`);
+      navigate(`/message/${res.data.id}`);
+    } catch (err) {
+      if (err.response.status === 404) {
+        const res = await newRequest.post(`/conversations/`, {
+          to: currentUser.seller ? buyerId : sellerId,
         });
-
-        // move to message page now
-        navigate(`/message/${newConversation.data.roomId}`);
-      } else next(error);
+        navigate(`/message/${res.data.id}`);
+      }
     }
   };
-
   return (
     <div className="orders">
       {isLoading ? (
@@ -72,10 +61,10 @@ const Orders = () => {
                   <td>{order.price}</td>
                   <td>
                     <img
-                      // bcz we need buyer and seller id so (order)
-                      onClick={() => handleConversation(order)}
                       className="message"
                       src="./img/message.png"
+                      alt=""
+                      onClick={() => handleContact(order)}
                     />
                   </td>
                 </tr>

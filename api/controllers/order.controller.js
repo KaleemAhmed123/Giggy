@@ -101,7 +101,7 @@ export const getOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
       ...(req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }),
-      isCompleted: true,
+      // isCompleted: true,
     });
 
     res.status(200).send(orders);
@@ -114,16 +114,25 @@ export const getOrders = async (req, res, next) => {
 // after getting payment intent we mark the completed as true
 export const confirm = async (req, res, next) => {
   try {
+    const { payment_intent } = req.body;
+
+    // Debugging statement to log the payment_intent value
+    console.log("Payment Intent:", payment_intent);
+
     const order = await Order.findOneAndUpdate(
       {
-        payment_intent: req.body.payment_intent,
+        payment_intent: payment_intent,
       },
       {
         $set: {
           isCompleted: true,
         },
-      }
+      },
+      { new: true }
     );
+
+    // Debugging statement to log the updated order
+    console.log("Updated Order:", order);
 
     if (!order) {
       return next(createError(404, "Order not found"));

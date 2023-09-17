@@ -6,8 +6,8 @@ const router = express.Router();
 
 // router.post("/:gigId", verifyToken, createOrder);
 //
-router.put("/", verifyToken, confirm);
 router.get("/", verifyToken, getOrders);
+router.put("/", verifyToken, confirm);
 // id for getting price from db not from body
 router.post("/create-payment-intent/:id", verifyToken, intent);
 //

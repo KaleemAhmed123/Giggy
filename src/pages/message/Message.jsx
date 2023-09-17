@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import newRequest from "../../utils/axiosUtil.js";
 import "./Message.scss";
@@ -9,6 +9,7 @@ const Message = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const queryClient = useQueryClient();
+  const textareaRef = useRef(null); // Create a ref for the textarea
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["messages"],
@@ -29,11 +30,20 @@ const Message = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate({
-      conversationId: id,
-      desc: e.target[0].value,
-    });
-    e.target[0].value = "";
+    const inputValue = textareaRef.current.value; // Access textarea value via ref
+    if (inputValue) {
+      mutation.mutate({
+        conversationId: id,
+        desc: inputValue,
+      });
+      textareaRef.current.value = "";
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
   };
 
   return (
@@ -64,7 +74,12 @@ const Message = () => {
         )}
         <hr />
         <form className="write" onSubmit={handleSubmit}>
-          <textarea type="text" placeholder="write a message" />
+          <textarea
+            ref={textareaRef} // Assign the ref to the textarea
+            type="text"
+            placeholder="write a message"
+            onKeyDown={handleKeyPress}
+          />
           <button type="submit">Send</button>
         </form>
       </div>

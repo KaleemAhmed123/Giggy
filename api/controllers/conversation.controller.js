@@ -2,16 +2,12 @@ import createError from "../utils/error.js";
 import Conversation from "../models/conversation.model.js";
 
 // when first time user clicks icon (have conv)
+// our conversation id will be (sellerId + buyerId) first seller then buyer (ourRule)
+// will pass to from body
 export const createConversation = async (req, res, next) => {
-  // our conversation id will be (sellerId + buyerId) first seller then buyer (ourRule)
-  // will pass to from body
-  const sellerPlusBuyerID = req.isSeller
-    ? req.userId + req.body.to
-    : req.body.to + req.userId;
-
   const newConversation = new Conversation({
-    roomId: sellerPlusBuyerID,
     // seller id token se mil jaegi warna body se buyer id aegai "to"
+    roomId: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId,
     sellerId: req.isSeller ? req.userId : req.body.to,
     buyerId: req.isSeller ? req.body.to : req.userId,
     readBySeller: req.isSeller,
@@ -21,8 +17,8 @@ export const createConversation = async (req, res, next) => {
   try {
     const savedConversation = await newConversation.save();
     res.status(201).send(savedConversation);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -32,11 +28,10 @@ export const createConversation = async (req, res, next) => {
 export const updateConversation = async (req, res, next) => {
   try {
     const updatedConversation = await Conversation.findOneAndUpdate(
-      { roomId: req.params.roomId },
+      { id: req.params.id },
       {
         $set: {
-          readBySeller: true,
-          readByBuyer: true,
+          ...(req.isSeller ? { readBySeller: true } : { readByBuyer: true }),
         },
       },
       { new: true }
@@ -54,17 +49,16 @@ export const updateConversation = async (req, res, next) => {
 
 export const getSingleConversation = async (req, res, next) => {
   try {
-    const conversation = await Conversation.findOne({ roomId: req.params.id });
-    if (!conversation) return next(createError(404, "Not found"));
-    // using this 404 indicator we start new conversation in createConv
+    const conversation = await Conversation.findOne({ id: req.params.id });
+    if (!conversation) return next(createError(404, "Not found!"));
     res.status(200).send(conversation);
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
-
 // for all chat messages for a user (seller or buyer)
 // this is how we pass conditional prop in mongoose (req.isSeller ? {sellerId: req.userId}: {buyerId: req.userId})
+
 export const getConversations = async (req, res, next) => {
   try {
     const conversations = await Conversation.find(
