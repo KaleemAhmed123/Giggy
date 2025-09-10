@@ -1,6 +1,8 @@
 import React from "react";
 import "./Gig.scss";
-import { Slider } from "infinite-react-carousel/lib";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/axiosUtil.js";
@@ -80,7 +82,14 @@ function Gig() {
             )}
             {/* image-slider */}
             {data.images && data.images.length > 0 ? (
-              <Slider slidesToShow={1} arrowsScroll={1} className="slider">
+              <Slider
+                slidesToShow={1}
+                slidesToScroll={1}
+                arrows
+                className="slider"
+                dots={false}
+                infinite={false}
+              >
                 {data.images?.map((img) => (
                   <img key={img} src={img} alt="" />
                 ))}

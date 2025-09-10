@@ -1,7 +1,10 @@
 import axios from "axios";
 
+const apiBaseUrl =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8800/api/";
+
 const newRequest = axios.create({
-  baseURL: "http://giggy.netlify.app/api/",
+  baseURL: apiBaseUrl,
   withCredentials: true,
 });
 
