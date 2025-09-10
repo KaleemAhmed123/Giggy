@@ -20,6 +20,7 @@ export const createGig = async (req, res, next) => {
 export const deleteGig = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.id);
+    if (!gig) return next(createError(404, "Gig not found!"));
     if (gig.userId !== req.userId)
       return next(createError(403, "You can delete only your gig!"));
 
@@ -33,7 +34,7 @@ export const deleteGig = async (req, res, next) => {
 export const getGig = async (req, res, next) => {
   try {
     const gig = await Gig.findById(req.params.id);
-    if (!gig) next(createError(404, "Gig not found!"));
+    if (!gig) return next(createError(404, "Gig not found!"));
     res.status(200).send(gig);
   } catch (err) {
     next(err);
@@ -42,19 +43,22 @@ export const getGig = async (req, res, next) => {
 
 export const getGigs = async (req, res, next) => {
   const q = req.query;
+  const min = q.min !== undefined ? Number(q.min) : undefined;
+  const max = q.max !== undefined ? Number(q.max) : undefined;
+  const sortKey = q.sort || "sales"; // default to sales
   const filters = {
     ...(q.userId && { userId: q.userId }),
     ...(q.cat && { cat: q.cat }),
-    ...((q.min || q.max) && {
+    ...((min !== undefined || max !== undefined) && {
       price: {
-        ...(q.min && { $ge: q.min }),
-        ...(q.max && { $le: q.max }),
+        ...(min !== undefined && { $gte: min }),
+        ...(max !== undefined && { $lte: max }),
       },
     }),
     ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
   try {
-    const gigs = await Gig.find(filters).sort({ [q.sort]: -1 });
+    const gigs = await Gig.find(filters).sort({ [sortKey]: -1 });
     res.status(200).send(gigs);
   } catch (err) {
     next(err);

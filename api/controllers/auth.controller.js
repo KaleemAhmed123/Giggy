@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import Jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-import createErrorObj from "../utils/error.js";
+import createError from "../utils/error.js";
 
 ////////////
 export const register = async (req, res, next) => {
@@ -9,7 +9,7 @@ export const register = async (req, res, next) => {
     // TODO (may cause problem)
     const user = await User.findOne({ username: req.body.username });
     if (user)
-      return next(createErrorObj(403, "User with this name already exist"));
+      return next(createError(403, "User with this name already exist"));
 
     const hash = bcrypt.hashSync(req.body.password, 7);
     const newUser = new User({
@@ -33,11 +33,11 @@ export const login = async (req, res, next) => {
     // usename is unique will search with that
     const user = await User.findOne({ username: req.body.username });
     if (!user)
-      return next(createErrorObj(404, "User not exist with this name."));
+      return next(createError(404, "User not exist with this name."));
 
     // compare the hashed passwords and check for equality
     if ((await bcrypt.compare(req.body.password, user.password)) === false)
-      return next(createErrorObj(400, "Wrong password."));
+      return next(createError(400, "Wrong password."));
     // we generate a token and in each subsequent req we use verifyToken utility
     else {
       const token = Jwt.sign(
@@ -51,7 +51,9 @@ export const login = async (req, res, next) => {
       const { password, ...restInfo } = user._doc;
       return res
         .cookie("accessToken", token, {
-          httponly: true,
+          httpOnly: true,
+          sameSite: "lax",
+          secure: process.env.NODE_ENV === "production",
         })
         .status(200)
         .send(restInfo);
@@ -69,8 +71,9 @@ export const logout = async (req, res) => {
   // (deleting the accesToken)
   res
     .clearCookie("accessToken", {
-      sameSite: "none",
-      secure: true,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
     })
     .status(200)
     .send("User logged out successfully.");

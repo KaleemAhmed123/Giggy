@@ -8,7 +8,7 @@ const Features = () => {
         <div className="item">
           <h1>A whole world of freelance talent at your fingertips</h1>
           <div className="title">
-            <img src="./img/check.png" alt="" />
+            <img src="/img/check.png" alt="" />
             The best for every budget
           </div>
           <p>
@@ -16,7 +16,7 @@ const Features = () => {
             just project-based pricing.
           </p>
           <div className="title">
-            <img src="./img/check.png" alt="" />
+            <img src="/img/check.png" alt="" />
             Quality work done quickly
           </div>
           <p>
@@ -24,7 +24,7 @@ const Features = () => {
             minutes.
           </p>
           <div className="title">
-            <img src="./img/check.png" alt="" />
+            <img src="/img/check.png" alt="" />
             Protected payments, every time
           </div>
           <p>
@@ -32,7 +32,7 @@ const Features = () => {
             until you approve the work.
           </p>
           <div className="title">
-            <img src="./img/check.png" alt="" />
+            <img src="/img/check.png" alt="" />
             24/7 support
           </div>
           <p>

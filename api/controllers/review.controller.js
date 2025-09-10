@@ -51,6 +51,20 @@ export const getReviews = async (req, res, next) => {
 
 export const deleteReview = async (req, res, next) => {
   try {
+    const review = await Review.findById(req.params.id);
+    if (!review) return next(createError(404, "Review not found"));
+
+    // Only the author can delete their review
+    if (review.userId !== req.userId)
+      return next(createError(403, "You can delete only your review!"));
+
+    // Adjust gig stars before deleting
+    await Gig.findByIdAndUpdate(review.gigId, {
+      $inc: { totalStars: -review.star, starNumber: -1 },
+    });
+
+    await Review.findByIdAndDelete(req.params.id);
+    res.status(200).send("Review deleted.");
   } catch (error) {
     next(error);
   }

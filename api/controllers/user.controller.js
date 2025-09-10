@@ -1,32 +1,28 @@
 import User from "../models/user.model.js";
-import createErrorObj from "../utils/error.js";
+import createError from "../utils/error.js";
 
 export const deleteUser = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return next(createError(404, "User not found"));
 
-  //   const token = req.cookies.accessToken;
-  //   if (!token) return res.status(401).send("You are not logged in.");
+    if (req.userId !== user._id.toString())
+      return next(createError(403, "You can delete only your account."));
 
-  //   jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {
-  //     if (payload.id !== user._id.toString())
-  //       return res.status(403).send("You can delete only your account.");
-  //   });
-  //====================================================================
-
-  // above code is replaced with verifyToken middleware
-  // verifyToken middleware will add payload(userId, isSeller) in req obj
-  // and with this we can verify token further
-  if (req.userId !== user._id.toString())
-    return next(createErrorObj(403, "You can delete only your account."));
-
-  // user can delete own only
-  await User.findByIdAndDelete(req.params.id);
-  res.status(200).send("Account deleted successfully.");
+    await User.findByIdAndDelete(req.params.id);
+    res.status(200).send("Account deleted successfully.");
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const getUser = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-  if (!user) next(createErrorObj(404, "User not found"));
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return next(createError(404, "User not found"));
 
-  res.status(200).send(user);
+    res.status(200).send(user);
+  } catch (err) {
+    next(err);
+  }
 };

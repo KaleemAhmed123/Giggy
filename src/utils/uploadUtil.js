@@ -8,8 +8,11 @@ const upload = async (file) => {
   try {
     const res = await axios.post(import.meta.env.VITE_UPLOAD_LINK, data);
 
-    const { url } = res.data;
-    return url;
+    const { secure_url, url } = res.data;
+    const chosen = secure_url || url;
+    if (!chosen) return undefined;
+    // Force https to avoid mixed-content blocking
+    return chosen.replace(/^http:\/\//i, "https://");
   } catch (err) {
     console.log(err);
   }

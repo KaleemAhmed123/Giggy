@@ -67,7 +67,7 @@ function MyGigs() {
                   <td>
                     <img
                       className="delete"
-                      src="./img/delete.png"
+                      src="/img/delete.png"
                       alt=""
                       onClick={() => handleDelete(gig._id)}
                     />

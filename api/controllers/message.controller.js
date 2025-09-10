@@ -10,7 +10,7 @@ export const createMessage = async (req, res, next) => {
   try {
     const savedMessage = await newMessage.save();
     await Conversation.findOneAndUpdate(
-      { id: req.body.conversationId },
+      { roomId: req.body.conversationId },
       {
         $set: {
           readBySeller: req.isSeller,

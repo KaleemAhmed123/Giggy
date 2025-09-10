@@ -1,5 +1,5 @@
 .gigCard {
-  width: 330px;
+  width: clamp(260px, 30vw, 330px);
   height: 400px;
   border: 1px solid rgb(228, 228, 228);
   margin-bottom: 40px;
@@ -63,6 +63,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 
     img {
       width: 16px;

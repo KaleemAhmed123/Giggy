@@ -3,8 +3,8 @@
     justify-content: center;
 
     .container {
-        width: 1200px;
-        margin: 50px;
+        width: min(1200px, 96%);
+        margin: 50px auto;
 
         .breadcrumbs {
             font-weight: 300;
@@ -19,7 +19,8 @@
             flex-direction: column;
             gap: 20px;
             height: 500px;
-            overflow: scroll;
+            overflow-y: auto;
+            overflow-x: hidden;
 
             .item {
                 display: flex;

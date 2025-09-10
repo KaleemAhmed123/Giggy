@@ -103,8 +103,21 @@
 
         .cards {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        @media screen and (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .cards {
+                gap: 16px;
+            }
         }
     }
 }

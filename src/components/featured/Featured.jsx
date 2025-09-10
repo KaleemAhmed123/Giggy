@@ -35,7 +35,7 @@ const Featured = () => {
           </h1>
           <div className="search">
             <div className="searchInput">
-              <img src="./img/search.png" alt="" />
+              <img src="/img/search.png" alt="" />
               <input
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyPress}
@@ -63,7 +63,7 @@ const Featured = () => {
         </div>
 
         <div className="right">
-          <img src="./img/man2.png" alt="" />
+          <img src="/img/man2.png" alt="" />
         </div>
       </div>
     </div>

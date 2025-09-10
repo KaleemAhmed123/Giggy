@@ -13,7 +13,7 @@ function Gig() {
   // console.log(id);
 
   const { isLoading, error, data } = useQuery({
-    queryKey: ["gig"],
+    queryKey: ["gig", id],
     queryFn: () =>
       newRequest.get(`/gigs/single/${id}`).then((res) => {
         return res.data;
@@ -27,7 +27,7 @@ function Gig() {
     error: errorUser,
     data: dataUser,
   } = useQuery({
-    queryKey: ["user"],
+    queryKey: ["user", userId],
     queryFn: () =>
       newRequest.get(`/users/${userId}`).then((res) => {
         return res.data;
@@ -81,22 +81,40 @@ function Gig() {
               </div>
             )}
             {/* image-slider */}
-            {data.images && data.images.length > 0 ? (
-              <Slider
-                slidesToShow={1}
-                slidesToScroll={1}
-                arrows
-                className="slider"
-                dots={false}
-                infinite={false}
-              >
-                {data.images?.map((img) => (
-                  <img key={img} src={img} alt="" />
-                ))}
-              </Slider>
-            ) : (
-              <p>No images available</p>
-            )}
+            {(() => {
+              const images = [data.cover, ...(data.images || [])]
+                .filter(Boolean)
+                .map((u) => (typeof u === "string" ? u.replace(/^http:\/\//i, "https://") : u));
+              return images?.length > 0 ? (
+                <Slider
+                  key={data._id}
+                  slidesToShow={1}
+                  slidesToScroll={1}
+                  arrows
+                  className="slider"
+                  dots={false}
+                  infinite={false}
+                  lazyLoad="ondemand"
+                  adaptiveHeight
+                >
+                  {images.map((img) => (
+                    <div key={img}>
+                      <img
+                        src={img}
+                        alt="gig"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = "/img/noavatar.jpg";
+                        }}
+                      />
+                    </div>
+                  ))}
+                </Slider>
+              ) : (
+                <p>No images available</p>
+              );
+            })()}
             {/* About gig */}
             <h2>About This Gig</h2>
             <p>{data.desc}</p>
@@ -194,7 +212,7 @@ function Gig() {
               ))}
             </div>
             <Link to={`/pay/${id}`}>
-              <button>Click to puchase</button>
+              <button aria-label="Proceed to payment">Click to purchase</button>
             </Link>
           </div>
           {/* right-end */}

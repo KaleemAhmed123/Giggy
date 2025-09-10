@@ -14,18 +14,22 @@ function Gigs() {
   const { search } = useLocation();
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["gigs"],
+    queryKey: ["gigs", search, sort, minValue, maxValue],
     queryFn: async () => {
-      let url = "/gigs";
+      let base = "/gigs";
+      const params = new URLSearchParams(search);
 
-      if (search) {
-        url += `${search}&sort=${sort}`;
-        if (!isNaN(minValue) && isNaN(maxValue)) {
-          url += `&min=${parseInt(minValue)}&max=${parseInt(maxValue)}`;
-        }
-      } else {
-        url += `?min=${minValue}&max=${maxValue}`;
-      }
+      // sort
+      if (sort) params.set("sort", sort);
+
+      // filters
+      const minNum = Number(minValue);
+      const maxNum = Number(maxValue);
+      if (!Number.isNaN(minNum) && minValue !== "") params.set("min", String(minNum));
+      if (!Number.isNaN(maxNum) && maxValue !== "") params.set("max", String(maxNum));
+
+      const query = params.toString();
+      const url = query ? `${base}?${query}` : base;
 
       const res = await newRequest.get(url);
       return res.data;
@@ -75,7 +79,7 @@ function Gigs() {
             <span className="sortType">
               {sort === "sales" ? "Best Selling" : "Newest"}
             </span>
-            <img src="./img/down.png" alt="" onClick={() => setOpen(!open)} />
+            <img src="/img/down.png" alt="" onClick={() => setOpen(!open)} />
             {open && (
               <div className="rightMenu">
                 {sort === "sales" ? (
